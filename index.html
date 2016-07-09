@@ -16,7 +16,7 @@
 
         <div class="flex_item">
           <div id='metric' class='selections'>
-            <label for="shapeColoursVariable">Metric for area shading:
+            <label for="shapeColoursVariable">Choose metric to use for area shading:
             </label>
             <select name="shapeColoursVariable" id="shapeColoursVariable">
             </select>
@@ -37,12 +37,17 @@
             <label for="filterData">Choose period:
             </label>
             <select name="filterData" id="filterData">
-           
+
             </select>
           </div>
         </div>
 
       </div>
+    </div>
+
+    <div id='hover_panel'>
+      <h3>Hover over voronoi areas to display statistics</h3>
+    
     </div>
 
     <script src="js/leaflet.txt"></script>
@@ -58,10 +63,10 @@
     <script src="js/main.txt"></script>
     
 
-    <script id="hb_info" type="text/x-handlebars-template">
+    <script id="hp_info" type="text/x-handlebars-template">
       <div class="entry">
         <div>
-          <h2>{{name}}</h2>
+          <h2>{{NAME}}</h2>
           <h4>Metric 1 = {{metric_1}}</h4>
           <h4>Metric 2 = {{metric_2}}</h4>
           <h4>Metric 3 = {{metric_3}}</h4>

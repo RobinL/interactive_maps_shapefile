@@ -9,7 +9,9 @@ function DataHolder(csv_data) {
     this.filter_points = function() {
         // Field to filter on
         var filter_value = $("#filterData").val();
-
+        me.current_points = []
+        me.points_lookup = {}
+        
         this.current_points = _.filter(this.all_csv_data, function(d) {
             return (d[BMT.filter_field] == filter_value)
         })
@@ -213,7 +215,7 @@ function DataHolder(csv_data) {
 
     this.update_colour_scales = function() {
 
-        var colourScaleOption = d3.select("#colourOptions").node().value
+        var colourScaleOption = $("#colourOptions").val()
         var colour_scale = BMT.colour_options[colourScaleOption]
 
         // Iterate through the column_descriptions_data updating the colour scale

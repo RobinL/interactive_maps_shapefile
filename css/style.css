@@ -43,6 +43,15 @@ body {
 
 }
 
+#hover_panel {
+  position:absolute;
+  background-color: #FFF;
+  border-radius: 5px;
+  padding: 8px 8px 0 8px;
+  bottom: 10px;
+  left: 10px;
+}
+
 label {
   display:block;
   font-weight: bold;
@@ -60,6 +69,16 @@ path {
 }
 
 path:hover {
-  fill-opacity: 1.0;
+  stroke-width: 2.5px;
+}
+
+path.no-data {
+  fill-opacity: .1;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+path.no-data:hover {
+  stroke-width: 2.5px;
 }
 

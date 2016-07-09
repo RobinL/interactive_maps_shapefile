@@ -25,13 +25,12 @@ $.when(p1,p2).done(function(topo_data, csv_data) {
 
   var colour_options_data = colour_options_to_options_data()
   draw_options("#colourOptions",colour_options_data)
-
   draw_options("#filterData",period_to_options_data())
 
-
-
-  //Filter points based on options
-  BMT.dataholder.filter_points()
+  $("#shapeColoursVariable, #colourOptions, #filterData").on("change", function(d) {
+    
+    BMT.shapefilemap.redraw()
+  })
 
   //Finally draw map
   BMT.shapefilemap = new ShapefileMap(BMT.geo_collection)
@@ -60,7 +59,7 @@ function metrics_to_options_data(metrics)  {
 
 function colour_options_to_options_data() {
   return _.map(BMT.colour_options, function(k,v) {
-    return {"value":k, "text":v}
+    return {"value":v, "text":v}
   })
 }
 
@@ -95,7 +94,7 @@ function draw_options(selector, data) {
           return d["text"]
       })
 
-    $("#shadingOptions").val(data[0]);
+    $(selector).val(data[0]["value"]);
 };
 
       
