@@ -36,3 +36,20 @@ function get_min_max_from_csv(csv_data, key) {
 
     return {"min": minMetric, "max": maxMetric}
 }
+
+
+//http://tributary.io/inlet/e9c894c68af525ebe5e31e72fef74dc5
+function produced_condensed() {
+    my_scale = d3.scale.linear()
+                        .domain([0,0.333,0.666,1])
+                        .range(["#6AE817", "#FFD52D", "#B30409", "#000"]);
+
+
+    nums =[0,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1]
+
+
+    nums =[0,0.3,0.6,0.7,0.8,0.9,0.925,0.95,0.975,1]
+
+
+    console.log(nums.map(function(d) {return '"' + my_scale(d) + '"'}))
+}

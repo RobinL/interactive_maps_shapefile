@@ -64,7 +64,8 @@ function TimeSeriesChart(holder, series_name, data) {
         })
         .y(function(d) {
             return y(d[series_name]);
-        });
+        })
+        .defined(function(d) { return !isNaN(d[series_name]); });
 
     var svg = holder.append("svg")
         .attr("width", width + margin.left + margin.right)

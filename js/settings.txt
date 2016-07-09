@@ -13,7 +13,8 @@ BMT.csv_path = "data/data_template_messy.csv"
 //Colour options for shading
 BMT.colour_options = {
     "Red (high) to green (low)": ["#6AE817","#FFA200", "#B30409"],
-    "Blues": ["#B5EED9", "#37BAE5",  "#132978", "#0D162C"]
+    "Blues": ["#B5EED9", "#37BAE5",  "#132978", "#0D162C"],
+    "Condensed" : ["#6ae817","#c3dd24","#f0ab26","#c22d10","#a10408","#6b0205","#360103","#1b0101","#0d0001","#000000"]
 };
 
 BMT.categorical_colours = ["#777", "#dc3912", "#ff9900", "#0E8917", "#990099", "#0099c6", "#dd4477", "#A6FF3C", "#FF3F42", "#1C3C5D", "#D860DA"];

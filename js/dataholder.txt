@@ -195,6 +195,10 @@ function DataHolder(csv_data) {
                     return d[k1]
                 });
 
+                var all_values = _.filter(all_values, function(d) {
+                    return !(isNaN(d))
+                })
+
                 var minMetric = Math.min.apply(null, all_values);
                 var maxMetric = Math.max.apply(null, all_values);
 
