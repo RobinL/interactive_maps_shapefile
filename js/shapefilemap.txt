@@ -1,0 +1,109 @@
+function ShapefileMap(geo_collection) {
+
+    var me = this;
+
+    var geo_collection = geo_collection;
+
+    var map = new L.Map("map", {
+                        center: [52.53, -0.09],
+                        zoom: 7
+                    })
+                    .addLayer(new L.TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"));
+
+    var svg = d3.select(map.getPanes().overlayPane).append("svg");
+
+    var g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+    map.on("viewreset", reposition);
+
+    var transform = d3.geo.transform({
+            point: projectPoint
+        })
+    
+    var path = d3.geo.path().projection(transform);
+
+    var feature = g.selectAll("path")
+        .data(geo_collection.features)
+        .enter()
+        .append("path")
+        .attr("fill", function(d) {return "#000"})
+        .attr("d", path);
+
+    
+    redraw()
+
+    // Reposition the SVG to cover the features.
+    function reposition() {
+        var bounds = path.bounds(geo_collection),
+            topLeft = bounds[0],
+            bottomRight = bounds[1];
+
+        svg.attr("width", bottomRight[0] - topLeft[0])
+            .attr("height", bottomRight[1] - topLeft[1])
+            .style("left", topLeft[0] + "px")
+            .style("top", topLeft[1] + "px");
+
+        g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+        feature.attr("d", path);
+    }
+
+    // Use Leaflet to implement a D3 geometric transformation.
+    function projectPoint(x, y) {
+        var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+        this.stream.point(point.x, point.y);
+    }
+
+
+    function redraw() {
+
+        function get_data(d) {
+            return  BMT.dataholder.points_lookup[d.properties[BMT.shapefile_join_field]]
+        }
+
+        var data_variable = $("#shapeColoursVariable").val()
+
+        var feature = g.selectAll("path")
+            .data(geo_collection.features)
+            .attr("fill", function(d) {
+                var this_data = get_data(d);
+                if (!(this_data)) {
+                    return "#000"
+                }
+                var this_value = this_data[data_variable];
+                return "#000"
+
+            })
+
+        reposition()
+    }
+}
+
+
+
+// .on("mouseover", function(d) {
+//             var d = d
+
+//             var template_dict = {}
+
+//             _.each(d.properties, function(dd, k) {
+//                 template_dict[k] = dd
+//             })
+
+//             // Now join on data from csv file
+//             var this_data = BMT.points_data[d.properties.CODE]
+//             _.each(this_data, function(dd, k) {
+//                 template_dict[k] = dd
+//             })
+
+
+//             var source = $("#hb_info").html();
+//             var template = Handlebars.compile(source);
+//             var html = template(template_dict);
+//             d3.select('#info2')
+//                 .html(html)
+//         })
+//         .on("mouseout", function(d) {
+//             d3.select('#info2')
+//                 .html("")
+//         });

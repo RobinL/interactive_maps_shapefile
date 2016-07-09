@@ -1,60 +1,72 @@
 <!doctype html>
-
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <title>Shapefile visualisation</title>
+    <meta name="description" content="Shapefile visualisation">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  </head>
 
-  <title>Data visualisation</title>
-  <meta name="description" content="Data visualisation">
-  <meta name="Robin Linacre" content="SitePoint">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css">
+  <body>
+    <div id="map"></div>
+    <div class="padded_options">
+      <div class="flex_parent">
 
-</head>
+        <div class="flex_item">
+          <div id='metric' class='selections'>
+            <label for="shapeColoursVariable">Metric for area shading:
+            </label>
+            <select name="shapeColoursVariable" id="shapeColoursVariable">
+            </select>
+          </div>
+        </div>
+        
+        <div class="flex_item">
+          <div id='metric' class='selections'>
+            <label for="colourOptions">Select colour scheme:
+            </label>
+            <select name="colourOptions" id="colourOptions">
+            </select>
+          </div>
+        </div>
 
-<body>
-
-  <div class="flex-parent">
-    
-    <div id="map" class="flex-item">
-  </div>
-
-  <div id="info" class="flex-item">
-    <select name="variable_option" id="variable_option">
-      <option value="mortgage_claims_per_100k_households">mortgage_claims_per_100k_households</option>
-      <option value="landord_claims_per_100k_households">landord_claims_per_100k_households</option>
-      <option value="mortgage_repossessions_per_100k_households">mortgage_repossessions_per_100k_households</option>
-      <option value="landord_per_100k_households">landord_per_100k_households</option>
-    </select>
-    <div id="info2"></div>
-  </div>
-
-  </div>
-
-  <script src="js/leaflet.txt"></script>
-  <script src="js/d3.txt"></script>
-  <script src="http://d3js.org/topojson.v1.min.js"></script>  
-  <script src="js/underscore.txt"></script>
-  <script src="js/jquery.txt"></script>
-  <script src="js/handlebars-v4.0.5.txt"></script>
-  <script src="js/utils.txt"></script>
-  <script src="js/main.txt"></script>
-  <script id="hb_info" type="text/x-handlebars-template">
-    <div class="entry">
-      <div>
-        <h2>{{NAME}}</h2>
-        <h4>Code = {{CODE}}</h4>
-        <p>Hectares = {{HECTARES}}</p>
-
-
-        <p>mortgage_claims_per_100k_households = {{mortgage_claims_per_100k_households}}</p>
-        <p>landord_claims_per_100k_households = {{landord_claims_per_100k_households}}</p>
-        <p>mortgage_repossessions_per_100k_households = {{mortgage_repossessions_per_100k_households}}</p>
-        <p>landord_per_100k_households = {{landord_per_100k_households}}</p>
-
+         <div class="flex_item">
+          <div id='metric' class='selections'>
+            <label for="filterData">Choose period:
+            </label>
+            <select name="filterData" id="filterData">
+           
+            </select>
+          </div>
+        </div>
 
       </div>
     </div>
 
-</body>
+    <script src="js/leaflet.txt"></script>
+    <script src="js/d3.txt"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="js/underscore.txt"></script>
+    <script src="js/jquery.txt"></script>
+    <script src="js/handlebars-v4.0.5.txt"></script>
+    <script src="js/utils.txt"></script>
+    <script src="js/settings.txt"></script>
+    <script src="js/shapefilemap.txt"></script>
+    <script src="js/dataholder.txt"></script>
+    <script src="js/main.txt"></script>
+    
+
+    <script id="hb_info" type="text/x-handlebars-template">
+      <div class="entry">
+        <div>
+          <h2>{{name}}</h2>
+          <h4>Metric 1 = {{metric_1}}</h4>
+          <h4>Metric 2 = {{metric_2}}</h4>
+          <h4>Metric 3 = {{metric_3}}</h4>
+        </div>
+      </div>
+    </script>
+  </body>
 </html

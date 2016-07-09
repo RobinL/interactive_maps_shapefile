@@ -3,36 +3,50 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 10pt;
 }
 
 #map {
-  height:100%;
-  width: 100%;
-  background: red;
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:100%;
 }
 
-#info {
-  width:500px;
+.padded_options {
+  position:absolute;
+  left: 0;
+  right: 0;
+  margin-left: 50px;
+  margin-right:50px; 
+  background-color: #fff;
+  border-radius: 5px;
+  top:10px;
 }
 
 
-.flex-parent {
-    width: 100%;
-    height: 100%;
+.flex_parent {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  flex-flow: row wrap;
+ }
 
-    display: flex;
-    flex-direction: row;
-    
-    justify-content: flex-start; 
-    align-items: stretch; 
-    align-content: stretch; 
+.flex_item {
+  
+   flex: 1 1 auto;
+   margin:5px;
+   padding: 5px; 
+   border: solid 1px #BCBCBC;
+   border-radius: 5px;
 
 }
 
-.flex-item {
-
+label {
+  display:block;
+  font-weight: bold;
 }
-
 
 
 svg {
@@ -46,19 +60,6 @@ path {
 }
 
 path:hover {
-  
   fill-opacity: 1.0;
 }
 
-div.tooltip { 
-    position: absolute;     
-    text-align: center;     
-    width: 100px;          
-             
-    padding: 2px;       
-    font: 12px sans-serif;    
-    background: lightsteelblue; 
-    border: 0px;    
-    border-radius: 8px;     
-    pointer-events: none;     
-}
