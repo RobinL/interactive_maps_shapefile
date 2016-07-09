@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Data visualisation</title>
+  <meta name="description" content="Data visualisation">
+  <meta name="Robin Linacre" content="SitePoint">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css">
+
+</head>
+
+<body>
+
+  <div class="flex-parent">
+    
+    <div id="map" class="flex-item">
+  </div>
+
+  <div id="info" class="flex-item">
+    <select name="variable_option" id="variable_option">
+      <option value="mortgage_claims_per_100k_households">mortgage_claims_per_100k_households</option>
+      <option value="landord_claims_per_100k_households">landord_claims_per_100k_households</option>
+      <option value="mortgage_repossessions_per_100k_households">mortgage_repossessions_per_100k_households</option>
+      <option value="landord_per_100k_households">landord_per_100k_households</option>
+    </select>
+    <div id="info2"></div>
+  </div>
+
+  </div>
+
+  <script src="js/leaflet.txt"></script>
+  <script src="js/d3.txt"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>  
+  <script src="js/underscore.txt"></script>
+  <script src="js/jquery.txt"></script>
+  <script src="js/handlebars-v4.0.5.txt"></script>
+  <script src="js/utils.txt"></script>
+  <script src="js/main.txt"></script>
+  <script id="hb_info" type="text/x-handlebars-template">
+    <div class="entry">
+      <div>
+        <h2>{{NAME}}</h2>
+        <h4>Code = {{CODE}}</h4>
+        <p>Hectares = {{HECTARES}}</p>
+
+
+        <p>mortgage_claims_per_100k_households = {{mortgage_claims_per_100k_households}}</p>
+        <p>landord_claims_per_100k_households = {{landord_claims_per_100k_households}}</p>
+        <p>mortgage_repossessions_per_100k_households = {{mortgage_repossessions_per_100k_households}}</p>
+        <p>landord_per_100k_households = {{landord_per_100k_households}}</p>
+
+
+      </div>
+    </div>
+
+</body>
+</html

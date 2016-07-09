@@ -1,0 +1,129 @@
+var map = new L.Map("map", {center: [52.53, -0.09], zoom: 7})
+    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+var p1 = $.ajax("topojson/topo_lad.json")
+var p2 = $.ajax("data/authoritynamesandcodes.csv")
+
+var BMT = {} //BoundaryMapTemplate
+
+// Colour scale 
+var colour_scale = d3.scale.log()
+    .domain([10, 100])
+    .range(["white", "blue" ]);
+
+  var div = d3.select("body").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
+
+$.when(p1,p2).done(function(topo_data, csv_data) {
+
+  //Convert topo_json to geojson
+  var collection = topo_data[0]
+  var collection = topojson.feature(collection, collection.objects.fixed)
+  BMT.collection = collection;
+  var variable_option = $("#variable_option").val();
+
+  //Parse the csv data
+  var points_data = d3.csv.parse(csv_data[0])
+  points_data = convert_to_float(points_data)
+  BMT.raw_data = points_data;
+  BMT.points_data = {}
+
+
+  _.each(points_data, function(d) {
+    BMT.points_data[d.LAD13CD] = d
+  })
+
+  var transform = d3.geo.transform({point: projectPoint}),
+      path = d3.geo.path().projection(transform);
+
+  var feature = g.selectAll("path")
+      .data(collection.features)
+    .enter().append("path")
+    .attr("fill", function(d) {
+      try {
+      return colour_scale(BMT.points_data[d.properties.CODE][variable_option])
+      } catch(err) {return 0}
+    })
+    .on("mouseover", function(d) {  
+            var d = d  
+
+            var template_dict = {}
+
+            _.each(d.properties, function(dd,k) {
+                template_dict[k] = dd
+            })
+
+            // Now join on data from csv file
+            var this_data = BMT.points_data[d.properties.CODE]
+            _.each(this_data, function(dd,k) {
+                template_dict[k] = dd
+            })
+
+
+            var source = $("#hb_info").html();
+            var template = Handlebars.compile(source);
+            var html = template(template_dict);
+            d3.select('#info2')
+                .html(html)
+            })
+        .on("mouseout", function(d) {   
+            d3.select('#info2')
+                .html("")
+        });
+
+  map.on("viewreset", reset);
+  reset();
+  redraw()
+
+  // Reposition the SVG to cover the features.
+  function reset() {
+    var bounds = path.bounds(collection),
+        topLeft = bounds[0],
+        bottomRight = bounds[1];
+
+    svg .attr("width", bottomRight[0] - topLeft[0])
+        .attr("height", bottomRight[1] - topLeft[1])
+        .style("left", topLeft[0] + "px")
+        .style("top", topLeft[1] + "px");
+
+    g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+    feature.attr("d", path);
+  }
+
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint(x, y) {
+    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+
+
+});
+
+
+
+
+function redraw() {
+    // Get the selection from the options box
+    var variable_option = $("#variable_option").val();
+
+    var min_max = get_min_max_from_csv(BMT.raw_data, variable_option)
+    
+    colour_scale = colour_scale.domain([min_max["min"]+10, min_max["max"]+10])
+    
+    var feature = g.selectAll("path")
+      .data(BMT.collection.features)
+    .attr("fill", function(d) {
+      try {
+      return colour_scale(BMT.points_data[d.properties.data][variable_option]+10)
+      } catch(err) {return 0}
+    })
+  }
+
+d3.select("#variable_option").on("change", function(d) {
+                redraw()
+            })
