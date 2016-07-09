@@ -39,6 +39,8 @@
             <select name="filterData" id="filterData">
 
             </select>
+            <button id="plus_dates">+</button>
+              <button id="minus_dates">-</button>
           </div>
         </div>
 
@@ -46,19 +48,25 @@
     </div>
 
     <div id='hover_panel'>
-      <h3>Hover over voronoi areas to display statistics</h3>
+      <h3>Hover over areas to display statistics</h3>
+    
+    </div>
+
+     <div id='hover_panel_charts'>
+      <h3>Hover over areas to display statistics</h3>
     
     </div>
 
     <script src="js/leaflet.txt"></script>
     <script src="js/d3.txt"></script>
-    <script src="js/topojson.v1.min.js"></script>
+    <script src="js/topojson.v1.min.txt"></script>
     <script src="js/underscore.txt"></script>
     <script src="js/jquery.txt"></script>
     <script src="js/handlebars-v4.0.5.txt"></script>
     <script src="js/utils.txt"></script>
     <script src="js/settings.txt"></script>
     <script src="js/shapefilemap.txt"></script>
+    <script src="js/little_line_chart.txt"></script>
     <script src="js/dataholder.txt"></script>
     <script src="js/main.txt"></script>
     
@@ -67,6 +75,7 @@
       <div class="entry">
         <div>
           <h2>{{NAME}}</h2>
+          <h4>{{date}}</h4>
           <h4>Metric 1 = {{metric_1}}</h4>
           <h4>Metric 2 = {{metric_2}}</h4>
           <h4>Metric 3 = {{metric_3}}</h4>

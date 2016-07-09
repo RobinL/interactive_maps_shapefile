@@ -3,17 +3,25 @@ function DataHolder(csv_data) {
     var me = this
     //Copy data
     this.all_csv_data = csv_data.slice();
+    
     this.current_points = []
     this.points_lookup = {}
 
     this.filter_points = function() {
         // Field to filter on
         var filter_value = $("#filterData").val();
+        
+        var filter_format = BMT.column_descriptions_data[BMT.filter_field].format
+
+
+     
         me.current_points = []
         me.points_lookup = {}
+
+        var filter_format = BMT.column_descriptions_data[BMT.filter_field].format
         
         this.current_points = _.filter(this.all_csv_data, function(d) {
-            return (d[BMT.filter_field] == filter_value)
+            return (filter_format(d[BMT.filter_field]) == filter_value)
         })
 
         //Get rid of data which doesn't have a join field (i.e. don't correspond to a known geometry)
@@ -147,6 +155,10 @@ function DataHolder(csv_data) {
                 
             })
         })
+
+        this.all_csv_data.sort(function(a,b) { 
+    return a[BMT.filter_field].getTime()-b[BMT.filter_field].getTime()
+    })
     }
 
     this.set_domains = function() {
@@ -242,6 +254,15 @@ function DataHolder(csv_data) {
 
 
         })
+
+    }
+
+    this.get_timeseries_data = function(this_code) {
+
+        return  _.filter(this.all_csv_data, function(d) {
+            
+            return d[BMT.data_join_field] == this_code
+        }) 
 
     }
 

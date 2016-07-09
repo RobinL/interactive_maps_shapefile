@@ -6,7 +6,8 @@ function ShapefileMap(geo_collection) {
 
     var map = new L.Map("map", {
                         center: [52.53, -0.09],
-                        zoom: 7
+                        zoom: 7,
+                        errorTileUrl: 'error.png'
                     })
                     .addLayer(new L.TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"));
 
@@ -72,7 +73,6 @@ function ShapefileMap(geo_collection) {
 
 
     this.redraw = function() {
-         
         //Filter points based on options
         BMT.dataholder.filter_points()
         BMT.dataholder.update_colour_scales()
@@ -139,17 +139,47 @@ function ShapefileMap(geo_collection) {
                 template_dict[k] = dd
             })
 
+            //For each in template dict, format if format exists
+            _.each(template_dict, function(k,v) {
+                if (BMT.column_descriptions_data[v]){
+                    template_dict[v] =     BMT.column_descriptions_data[v].format(template_dict[v])
+                }
+            })
 
+            // Update hover panel
             var source = $("#hp_info").html();
             var template = Handlebars.compile(source);
             var html = template(template_dict);
             d3.select('#hover_panel')
                 .html(html)
+
+            // Display time series charts.
+            var ts_data = BMT.dataholder.get_timeseries_data(this_data[BMT.data_join_field])
+            
+            //Plot all fields which are continuous data, are manually include, and are not the BMT.filterfield
+            var to_plot = []
+            _.each(BMT.column_descriptions_data, function(d) {
+                if ((!(d.is_categorical)) & (d.key!=BMT.filter_field)) {
+                    to_plot.push(d.key)
+                }
+            })
+
+            d3.select("#hover_panel_charts").html("")
+
+            _.each(to_plot, function(d) {
+                holder = d3.select("#hover_panel_charts").append("div").attr("class","time_series_chart")
+                chart = new TimeSeriesChart(holder, d, ts_data)
+
+            })
+
     }
 
     function on_mouseout(d) {
-        d3.select('#hover_panel')
-                .html("<h3>Hover over voronoi areas to display statistics</h3>")
+        // d3.select('#hover_panel')
+        //         .html("<h3>Hover over areas to display statistics</h3>")
+
+        // d3.select('#hover_panel_charts')
+        //         .html("<h3>Hover over areas to display statistics</h3>")
 
     }
 

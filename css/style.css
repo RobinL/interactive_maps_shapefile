@@ -52,6 +52,15 @@ body {
   left: 10px;
 }
 
+#hover_panel_charts {
+  position:absolute;
+  background-color: #FFF;
+  border-radius: 5px;
+  padding: 8px 8px 0 8px;
+  bottom: 10px;
+  right: 10px;
+}
+
 label {
   display:block;
   font-weight: bold;
@@ -81,4 +90,37 @@ path.no-data {
 path.no-data:hover {
   stroke-width: 2.5px;
 }
+
+
+.time_series_chart {
+   font-size: 10px;
+}
+
+.time_series_chart .title {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.time_series_chart .axis path,
+.time_series_chart .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.time_series_chart>.x.axis path {
+  display: none;
+}
+
+.time_series_chart .line  {
+  fill: none;
+  stroke-width: 1.5px;
+  stroke: steelblue;
+}
+
+.time_series_chart svg {
+  border-bottom: 0.5px solid #B3B1AE
+
+}
+
 

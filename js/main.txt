@@ -32,6 +32,34 @@ $.when(p1,p2).done(function(topo_data, csv_data) {
     BMT.shapefilemap.redraw()
   })
 
+   d3.select("#plus_dates").on("click", function(d) {
+
+        var current = $("#filterData").val()
+        
+        var periods = BMT.period_options 
+      
+
+        var current_index = periods.indexOf(current)
+        var new_index = Math.min(current_index + 1, periods.length - 1)
+        var new_period = periods[new_index]
+
+        $("#filterData").val(new_period).change();
+
+    });
+
+    d3.select("#minus_dates").on("click", function(d) {
+
+        var current = $("#filterData").val()
+        var periods = BMT.period_options 
+
+        var current_index = periods.indexOf(current)
+        var new_index = Math.max(current_index - 1, 0)
+        var new_period = periods[new_index]
+
+        $("#filterData").val(new_period).change();
+
+    })
+
   //Finally draw map
   BMT.shapefilemap = new ShapefileMap(BMT.geo_collection)
 
@@ -65,17 +93,29 @@ function colour_options_to_options_data() {
 
 function period_to_options_data() {
 
+  var format = BMT.column_descriptions_data[BMT.filter_field].format
   var uniques = _.unique(BMT.dataholder.all_csv_data, function(d) {
-    return d[BMT.filter_field];
+    
+    return format(d[BMT.filter_field]);
   })
 
   var uniques = _.map(uniques, function(d) {
     return d[BMT.filter_field];
   })
 
-  return _.map(uniques, function(d) {
-    return {"text": d, "value":d}
+  uniques = uniques.sort(function(a,b) { 
+    return a.getTime()-b.getTime()
   })
+
+  var return_array =  _.map(uniques, function(d) {
+    return {"text": format(d), "value":format(d)}
+  })
+
+  BMT.period_options = _.map(uniques, format);
+
+  return return_array
+
+
 
 
 }
@@ -94,7 +134,7 @@ function draw_options(selector, data) {
           return d["text"]
       })
 
-    $(selector).val(data[0]["value"]);
+    // $(selector).val(data[0]["value"]);
 };
 
       

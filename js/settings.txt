@@ -5,7 +5,7 @@ var BMT = {} //BoundaryMapTemplate
 BMT.shapefile_join_field = "CODE"
 BMT.data_join_field = "code"
 
-BMT.filter_field = "time_period"
+BMT.filter_field = "date"
 
 BMT.shapefile_path = "topojson/topo_lad.json"
 BMT.csv_path = "data/data_template_messy.csv"
@@ -35,6 +35,9 @@ BMT.column_descriptions_data = {
     "metric 5": {
         "long_name": "My metric 5"
     },
-    "time_period": {"val_parser": function(d){return d}},
+    "date": {
+        "val_parser": d3.time.format('%Y-%m-%d').parse,
+        "format": d3.time.format('%Y-%m-%d')
+    }
 
 }
