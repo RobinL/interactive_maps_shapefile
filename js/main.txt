@@ -1,6 +1,12 @@
 var p1 = $.ajax(BMT.shapefile_path)
 var p2 = $.ajax(BMT.csv_path)
 
+// To enable this to be shared on the shared drives, comment out the above two lines, and uncomment the following:
+
+// var p3 = jQuery.Deferred();
+// p3.resolve("hurray")
+// $.when(p3).done(function() { topo_data = [topo_data]
+
 $.when(p1,p2).done(function(topo_data, csv_data) {
 
   //Convert topo_json to geojson
